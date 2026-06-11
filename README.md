@@ -109,27 +109,50 @@ stateDiagram-v2
    Google Play Billing documentation so concepts transfer directly to and from
    the SDK.
 
+## Play Billing RTDN adapter
+
+If you process Google Play [real-time developer notifications](https://developer.android.com/google/play/billing/rtdn-reference)
+server-side (recommended), [`RTDNAdapter`](src/main/kotlin/com/rishabhships/renew/RTDNAdapter.kt)
+maps notification types directly to Renew events:
+
+```kotlin
+// Inside your RTDN Pub/Sub handler, after fetching full details via
+// Subscriptions.get on the Play Developer API:
+val event = RTDNAdapter.toEvent(
+    notificationType = RTDNNotificationType.SUBSCRIPTION_RENEWED,
+    productId = "pro_monthly",
+    expiryEpochMs = details.expiryTimeMillis,
+)
+
+event?.let { stateMachine.reduce(currentState, it) }
+```
+
+The adapter returns `null` for informational-only notification types
+(`PRICE_CHANGE_CONFIRMED`, `DEFERRED`, `PAUSE_SCHEDULE_CHANGED`,
+`PENDING_PURCHASE_CANCELED`) so you can ignore them safely.
+
 ## Installation
 
-> Renew is currently in pre-release. Maven Central publication is planned for `v0.1.0`.
+> Renew is currently in pre-release. Maven Central publication is planned for `v0.2.0`.
 
 For now, you can use it locally by cloning the repo and including it as a Gradle
 project, or by copying the small set of source files into your own project.
 
 ```kotlin
 // Coming soon
-implementation("com.rishabhships:renew-kt:0.1.0")
+implementation("com.rishabhships:renew-kt:0.2.0")
 ```
 
 ## Roadmap
 
 - [x] **v0.1** &mdash; Core state machine + comprehensive tests
-- [ ] **v0.2** &mdash; Play Billing SDK adapter (`renew-play-billing`) that converts
-  `Purchase` / `SubscriptionPurchaseV2` payloads directly into Renew events
-- [ ] **v0.3** &mdash; `SubscriptionStore` &mdash; a Coroutine `StateFlow`-backed wrapper
+- [x] **v0.2** &mdash; Play Billing RTDN notification adapter (pure-JVM, no Android deps)
+- [ ] **v0.3** &mdash; Client-side `Purchase` adapter that takes a Play Billing SDK
+  `Purchase` + previous state and infers the correct event
+- [ ] **v0.4** &mdash; `SubscriptionStore` &mdash; a Coroutine `StateFlow`-backed wrapper
   for reactive observation
-- [ ] **v0.4** &mdash; Room persistence helpers
-- [ ] **v0.5** &mdash; Compose preview helpers + minimal sample Android app
+- [ ] **v0.5** &mdash; Room persistence helpers
+- [ ] **v0.6** &mdash; Compose preview helpers + minimal sample Android app
 
 ## Running tests
 
