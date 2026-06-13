@@ -1,26 +1,7 @@
 plugins {
-    kotlin("jvm") version "2.0.21"
-}
-
-group = "com.rishabhships"
-version = "0.2.0-SNAPSHOT"
-
-repositories {
-    mavenCentral()
-}
-
-kotlin {
-    jvmToolchain(17)
-    explicitApi()
-}
-
-dependencies {
-    testImplementation(kotlin("test"))
-}
-
-tasks.test {
-    useJUnitPlatform()
-    testLogging {
-        events("passed", "skipped", "failed")
-    }
+    // Declare plugins centrally; modules apply them as needed.
+    kotlin("jvm") version "2.0.21" apply false
+    kotlin("android") version "2.0.21" apply false
+    id("org.jetbrains.kotlin.plugin.compose") version "2.0.21" apply false
+    id("com.android.application") version "8.5.2" apply false
 }

@@ -21,12 +21,12 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v3
 
-      - name: Run tests
-        run: ./gradlew test --stacktrace
+      - name: Run library tests
+        run: ./gradlew :lib:test --stacktrace
 
       - name: Upload test report on failure
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: test-report
-          path: build/reports/tests/test
+          path: lib/build/reports/tests/test

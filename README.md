@@ -6,12 +6,20 @@
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.0-purple.svg?logo=kotlin)](https://kotlinlang.org)
 
+<p align="center">
+  <img src="samples/android/docs/screenshot.png" alt="Renew sample app: InGracePeriod state with allowed and rejected events shown" width="320" />
+</p>
+
 Every subscription comes down to one question: *does it renew?* And the answer is
 never a simple yes or no &mdash; it depends on grace periods, account holds, pauses,
 cancellations, upgrades, downgrades, and cross-grades. **Renew** is a Kotlin
 library that models the answer as an explicit state machine, rejecting invalid
 transitions with descriptive errors instead of letting your app silently end up
 in an inconsistent state.
+
+> **Try the demo** &mdash; a small Compose app in [`samples/android/`](samples/android/) lets you drive
+> the state machine interactively. Filled buttons are valid transitions from the
+> current state; outlined buttons would be rejected, and tell you why.
 
 ## Why this exists
 
@@ -133,32 +141,52 @@ The adapter returns `null` for informational-only notification types
 
 ## Installation
 
-> Renew is currently in pre-release. Maven Central publication is planned for `v0.2.0`.
+> Renew is currently in pre-release. Maven Central publication is planned for `v0.3.0`.
 
 For now, you can use it locally by cloning the repo and including it as a Gradle
 project, or by copying the small set of source files into your own project.
 
 ```kotlin
 // Coming soon
-implementation("com.rishabhships:renew-kt:0.2.0")
+implementation("com.rishabhships:renew-kt:0.3.0")
 ```
+
+## Project layout
+
+```
+renew-kt/
+├── lib/                    Pure Kotlin/JVM library — the state machine itself
+└── samples/
+    └── android/            Compose demo app driving the state machine live
+```
+
+The library has no Android dependencies. Use it from your Android app, from your
+server-side subscription processor, or from a CLI replay tool.
 
 ## Roadmap
 
 - [x] **v0.1** &mdash; Core state machine + comprehensive tests
 - [x] **v0.2** &mdash; Play Billing RTDN notification adapter (pure-JVM, no Android deps)
+- [x] **v0.2.x** &mdash; Compose sample app showing the state machine in action
 - [ ] **v0.3** &mdash; Client-side `Purchase` adapter that takes a Play Billing SDK
-  `Purchase` + previous state and infers the correct event
+  `Purchase` + previous state and infers the correct event &middot; Maven Central publication
 - [ ] **v0.4** &mdash; `SubscriptionStore` &mdash; a Coroutine `StateFlow`-backed wrapper
   for reactive observation
 - [ ] **v0.5** &mdash; Room persistence helpers
-- [ ] **v0.6** &mdash; Compose preview helpers + minimal sample Android app
 
 ## Running tests
 
 ```bash
-./gradlew test
+./gradlew :lib:test
 ```
+
+## Running the sample
+
+```bash
+./gradlew :samples:android:installDebug
+```
+
+See [`samples/android/README.md`](samples/android/README.md) for details.
 
 ## Contributing
 
