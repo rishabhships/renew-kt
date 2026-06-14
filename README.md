@@ -120,7 +120,7 @@ stateDiagram-v2
 ## Play Billing RTDN adapter
 
 If you process Google Play [real-time developer notifications](https://developer.android.com/google/play/billing/rtdn-reference)
-server-side (recommended), [`RTDNAdapter`](src/main/kotlin/com/rishabhships/renew/RTDNAdapter.kt)
+server-side (recommended), [`RTDNAdapter`](lib/src/main/kotlin/com/rishabhships/renew/RTDNAdapter.kt)
 maps notification types directly to Renew events:
 
 ```kotlin
