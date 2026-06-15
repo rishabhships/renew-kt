@@ -2,6 +2,7 @@
 
 > A deterministic, well-tested Kotlin state machine for Google Play Billing subscriptions.
 
+[![Maven Central](https://img.shields.io/maven-central/v/com.rishabhships/renew-kt.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/com.rishabhships/renew-kt)
 [![CI](https://github.com/rishabhships/renew-kt/actions/workflows/ci.yml/badge.svg)](https://github.com/rishabhships/renew-kt/actions/workflows/ci.yml)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.0-purple.svg?logo=kotlin)](https://kotlinlang.org)
@@ -141,14 +142,25 @@ The adapter returns `null` for informational-only notification types
 
 ## Installation
 
-> Renew is currently in pre-release. Maven Central publication is planned for `v0.3.0`.
-
-For now, you can use it locally by cloning the repo and including it as a Gradle
-project, or by copying the small set of source files into your own project.
+Available on [Maven Central](https://central.sonatype.com/artifact/com.rishabhships/renew-kt).
 
 ```kotlin
-// Coming soon
+// Gradle (Kotlin DSL)
 implementation("com.rishabhships:renew-kt:0.3.0")
+```
+
+```groovy
+// Gradle (Groovy DSL)
+implementation 'com.rishabhships:renew-kt:0.3.0'
+```
+
+```xml
+<!-- Maven -->
+<dependency>
+    <groupId>com.rishabhships</groupId>
+    <artifactId>renew-kt</artifactId>
+    <version>0.3.0</version>
+</dependency>
 ```
 
 ## Project layout
@@ -168,11 +180,12 @@ server-side subscription processor, or from a CLI replay tool.
 - [x] **v0.1** &mdash; Core state machine + comprehensive tests
 - [x] **v0.2** &mdash; Play Billing RTDN notification adapter (pure-JVM, no Android deps)
 - [x] **v0.2.x** &mdash; Compose sample app showing the state machine in action
-- [ ] **v0.3** &mdash; Client-side `Purchase` adapter that takes a Play Billing SDK
-  `Purchase` + previous state and infers the correct event &middot; Maven Central publication
-- [ ] **v0.4** &mdash; `SubscriptionStore` &mdash; a Coroutine `StateFlow`-backed wrapper
+- [x] **v0.3** &mdash; Maven Central publication
+- [ ] **v0.4** &mdash; Client-side `Purchase` adapter that takes a Play Billing SDK
+  `Purchase` + previous state and infers the correct event
+- [ ] **v0.5** &mdash; `SubscriptionStore` &mdash; a Coroutine `StateFlow`-backed wrapper
   for reactive observation
-- [ ] **v0.5** &mdash; Room persistence helpers
+- [ ] **v0.6** &mdash; Room persistence helpers
 
 ## Running tests
 
